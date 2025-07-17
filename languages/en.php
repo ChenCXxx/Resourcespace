@@ -3208,6 +3208,7 @@ $lang["language-tr"]="Turkish";
 $lang["language-uk"]="Ukranian";
 $lang["language-ur"]="Urdu";
 $lang["language-zh-CN"]="Simplified Chinese";
+$lang["language-zh-TW"]="Traditional Chinese";
 
 $lang["workflow-actions-archive"]="Archive";
 $lang["workflow-actions-return-to-user-review"]="Return to user review";

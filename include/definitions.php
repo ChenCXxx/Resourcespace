@@ -937,7 +937,7 @@ $languages["tr"]="Türkçe"; # Turkish
 $languages["uk"]="українська мова"; # Ukranian
 $languages["ur"]="اُردُو"; # Urdu
 $languages["zh-CN"]="简体字"; # Simplified Chinese
-
+$languages["zh-TW"]="繁體字"; # Traditional Chinese
 # English stop words
 $noadd=array("", "a","the","this","then","another","is","with","in","and","where","how","on","of","to", "from", "at", "for", "-", "by", "be");
 
