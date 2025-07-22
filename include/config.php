@@ -7,34 +7,45 @@
 # All custom settings should be entered in this file.
 # Options may be copied from config.default.php and configured here.
 
-# MySQL database settings
-$mysql_server = 'localhost';
-$mysql_username = 'admin';
-$mysql_password = 'password';
-$read_only_db_username = 'resourcespace_r';
-$read_only_db_password = 'your_r_password';
-$mysql_db = 'resourcespace';
+// --- 載入 .env 環境變數 ---
+$env_file = __DIR__ . '/../.env';
+if (file_exists($env_file)) {
+    $env_lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($env_lines as $line) {
+        if (strpos($line, '#') === 0 || strpos($line, '=') === false) continue;
+        list($key, $value) = explode('=', $line, 2);
+        $key = trim($key);
+        $value = trim($value);
+        if ($value === 'true') $value = true;
+        if ($value === 'false') $value = false;
+        $_ENV[$key] = $value;
+    }
+}
 
-$mysql_bin_path = '/usr/bin';
+# MySQL database settings - 從環境變數讀取
+$mysql_server = $_ENV['MYSQL_SERVER'] ?? 'localhost';
+$mysql_username = $_ENV['MYSQL_USERNAME'] ?? 'admin';
+$mysql_password = $_ENV['MYSQL_PASSWORD'] ?? 'password';
+$read_only_db_username = $_ENV['READ_ONLY_DB_USERNAME'] ?? 'resourcespace_r';
+$read_only_db_password = $_ENV['READ_ONLY_DB_PASSWORD'] ?? 'your_r_password';
+$mysql_db = $_ENV['MYSQL_DB'] ?? 'resourcespace';
+$mysql_bin_path = $_ENV['MYSQL_BIN_PATH'] ?? '/usr/bin';
 
-# Base URL of the installation
-$baseurl = 'http://192.168.110.130/resourcespace';
+# Base URL of the installation - 從環境變數讀取
+$baseurl = $_ENV['BASE_URL'] ?? 'http://localhost/resourcespace';
 
-// --- 啟用 PHPMailer 和 SMTP ---
-$use_phpmailer = true;
-$use_smtp = true;
-
-// --- Gmail SMTP 設定 ---
-$smtp_host = 'smtp.gmail.com';
-$smtp_port = 587;
-$smtp_auth = true;
-$smtp_username = 'hsuannn.cs12@nycu.edu.tw'; // Gmail帳號
-$smtp_password = 'nmsu swyr fszk uvpm'; // 需用App Password，不是一般密碼
-$smtp_secure = 'tls'; // Gmail建議用TLS
-$email_from_name = 'ResourceSpace'; // 寄件人名稱，可自訂
-# Email settings
-$email_notify = 'hsuannn.cs12@nycu.edu.tw';
-$email_from = 'hsuannn.cs12@nycu.edu.tw';
+// --- Email 設定從環境變數讀取 ---
+$use_phpmailer = $_ENV['USE_PHPMAILER'] ?? false;
+$use_smtp = $_ENV['USE_SMTP'] ?? false;
+$smtp_host = $_ENV['SMTP_HOST'] ?? '';
+$smtp_port = $_ENV['SMTP_PORT'] ?? 587;
+$smtp_auth = $_ENV['SMTP_AUTH'] ?? true;
+$smtp_username = $_ENV['SMTP_USERNAME'] ?? '';
+$smtp_password = $_ENV['SMTP_PASSWORD'] ?? '';
+$smtp_secure = $_ENV['SMTP_SECURE'] ?? 'tls';
+$email_from = $_ENV['EMAIL_FROM'] ?? '';
+$email_from_name = $_ENV['EMAIL_FROM_NAME'] ?? 'ResourceSpace';
+$email_notify = $_ENV['EMAIL_NOTIFY'] ?? '';
 # Secure keys
 $scramble_key = 'fc890d65e4eba081e73e45a56de318f7550aa6500b2dd72c4e951095452cf97b';
 $api_scramble_key = '991c51f52c3d39b2c7c4d1a40cb80ee38a494e261defed627fcb614cba824e0b';
